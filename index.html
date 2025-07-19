@@ -1,141 +1,930 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Galeria de imagenes</title>
-    <link rel="stylesheet" href="estilos2.css">
+    <title>Control de Ventas - delicias callejeras</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        
+        .controls {
+            padding: 20px;
+            background: #f8f9fa;
+            border-bottom: 2px solid #e9ecef;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .date-selector {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .date-selector label {
+            font-weight: bold;
+            color: #495057;
+        }
+        
+        .date-selector input {
+            padding: 10px;
+            border: 2px solid #dee2e6;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+        
+        .export-controls {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            background: linear-gradient(135deg, #28a745, #20c997);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(40, 167, 69, 0.4);
+        }
+        
+        .btn.excel {
+            background: linear-gradient(135deg, #28a745, #20c997);
+        }
+        
+        .btn.export {
+            background: linear-gradient(135deg, #6f42c1, #e83e8c);
+        }
+        
+        .btn.import {
+            background: linear-gradient(135deg, #17a2b8, #007bff);
+        }
+        
+        .stats-bar {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #dee2e6;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #28a745;
+        }
+        
+        .stat-label {
+            font-size: 0.9em;
+            color: #6c757d;
+            margin-top: 2px;
+        }
+        
+        .sales-section {
+            padding: 30px;
+        }
+        
+        .section-title {
+            font-size: 1.5em;
+            color: #495057;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #ff6b6b;
+            padding-bottom: 10px;
+        }
+        
+        .sales-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .sales-table th {
+            background: linear-gradient(135deg, #495057, #6c757d);
+            color: white;
+            padding: 15px 10px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        
+        .sales-table td {
+            padding: 12px 10px;
+            text-align: center;
+            border-bottom: 1px solid #e9ecef;
+            font-size: 14px;
+        }
+        
+        .sales-table tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        
+        .sales-table tr:hover {
+            background-color: #e3f2fd;
+            transition: background-color 0.3s ease;
+        }
+        
+        .add-sale {
+            background: #e3f2fd;
+            border: 2px dashed #2196f3;
+        }
+        
+        .add-sale input, .add-sale select {
+            width: 100%;
+            border: none;
+            background: transparent;
+            padding: 8px;
+            text-align: center;
+            font-size: 14px;
+        }
+        
+        .add-sale input:focus, .add-sale select:focus {
+            outline: 2px solid #2196f3;
+            border-radius: 4px;
+        }
+        
+        .totals-section {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            padding: 30px;
+            border-top: 3px solid #ff6b6b;
+        }
+        
+        .totals-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .total-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            border-left: 5px solid;
+        }
+        
+        .daily-total {
+            border-left-color: #28a745;
+        }
+        
+        .payment-methods {
+            border-left-color: #17a2b8;
+        }
+        
+        .total-card h3 {
+            color: #495057;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+        
+        .total-amount {
+            font-size: 2em;
+            font-weight: bold;
+            color: #28a745;
+            margin-bottom: 10px;
+        }
+        
+        .payment-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding: 8px 0;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .currency {
+            color: #6c757d;
+            font-size: 0.9em;
+        }
+        
+        .export-panel {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        .export-panel h3 {
+            color: #856404;
+            margin-bottom: 15px;
+        }
+        
+        .export-panel p {
+            color: #856404;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #28a745;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            z-index: 1000;
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+        }
+        
+        .notification.show {
+            transform: translateX(0);
+        }
+        
+        .file-input {
+            margin: 10px 0;
+        }
+        
+        .file-input input[type="file"] {
+            display: none;
+        }
+        
+        .file-input label {
+            background: linear-gradient(135deg, #17a2b8, #007bff);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .file-input label:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(23, 162, 184, 0.4);
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+                border-radius: 10px;
+            }
+            
+            .header {
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .export-controls {
+                justify-content: center;
+            }
+            
+            .sales-table {
+                font-size: 12px;
+            }
+            
+            .sales-table th, .sales-table td {
+                padding: 8px 5px;
+            }
+            
+            .totals-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
-    <div class="galeria">
-
-        <h1>tus fotos</h1>
+    <div class="container">
+        <div class="header">
+            <h1>🌭 Control de Ventas - delicias callejeras</h1>
+            <p>Sistema integrado con exportación a Excel automática</p>
+        </div>
         
-        <div class="linea"></div>
-        <div class="contenedor-imagenes">
-            <div class="imagen">
-                <img src="img/WhatsApp Image 2023-11-17 at 7.16.11 PM.jpeg" alt="">
+        <div class="controls">
+            <div class="date-selector">
+                <label for="sales-date">📅 Fecha de ventas:</label>
+                <input type="date" id="sales-date" value="">
+                <button class="btn" onclick="addSale()">➕ Agregar Venta</button>
             </div>
-            
-            <div class="imagen">
-                <img src="img/WhatsApp Image 2023-11-17 at 7.12.26 PM.jpeg" alt="">
+            <div class="export-controls">
+                <button class="btn excel" onclick="exportToExcel()">📊 Generar Excel</button>
+                <button class="btn export" onclick="exportCurrentData()">💾 Exportar Datos</button>
+                <div class="file-input">
+                    <label for="import-file">📂 Importar Excel</label>
+                    <input type="file" id="import-file" accept=".xlsx,.xls,.csv" onchange="importData(event)">
+                </div>
             </div>
-
-            <div class="imagen">
-                <img src="img/WhatsApp Image 2023-11-17 at 7.12.27 PM (1).jpeg" alt="">
+        </div>
+        
+        <div class="stats-bar">
+            <div class="stat-item">
+                <div class="stat-number" id="totalSales">0</div>
+                <div class="stat-label">Ventas hoy</div>
             </div>
-
-            <div class="imagen">
-                <img src="img/WhatsApp Image 2023-11-17 at 7.12.27 PM.jpeg" alt="">
+            <div class="stat-item">
+                <div class="stat-number" id="totalRevenue">Q0.00</div>
+                <div class="stat-label">Ingresos</div>
             </div>
-
-            <div class="imagen">
-                <img src="img/WhatsApp Image 2023-11-17 at 7.12.29 PM (1).jpeg" alt="">
+            <div class="stat-item">
+                <div class="stat-number" id="avgSale">Q0.00</div>
+                <div class="stat-label">Venta promedio</div>
             </div>
-
-            <div class="imagen">
-                <img src="img/WhatsApp Image 2023-11-17 at 7.12.29 PM.jpeg" alt="">
+        </div>
+        
+        <div class="export-panel">
+            <h3>📈 Exportación Automática a Excel</h3>
+            <p>Todos los datos que agregas aquí se pueden exportar directamente a Excel. 
+            El archivo incluye todas las fórmulas, totales y formato profesional para tu contabilidad.</p>
+            <button class="btn excel" onclick="exportToExcel()">🚀 Generar Excel Completo</button>
+        </div>
+        
+        <div class="sales-section">
+            <h2 class="section-title">📋 Registro de Ventas Diarias</h2>
+            <table class="sales-table" id="salesTable">
+                <thead>
+                    <tr>
+                        <th>Hora</th>
+                        <th>Cliente</th>
+                        <th>Producto</th>
+                        <th>Cantidad</th>
+                        <th>Precio Unit.</th>
+                        <th>Total</th>
+                        <th>Forma de Pago</th>
+                        <th>Notas</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="salesBody">
+                    <tr class="add-sale">
+                        <td><input type="time" id="newTime" value=""></td>
+                        <td><input type="text" id="newCustomer" placeholder="Nombre del cliente"></td>
+                        <td>
+                            <select id="newProduct">
+                                <option value="">Seleccionar...</option>
+                                <option value="Shuco Sencillo">Shuco Sencillo - Q10.00</option>
+                                <option value="Shuco Especial">Shuco Especial - Q15.00</option>
+                                <option value="Shuco Mixto">Shuco Mixto - Q18.00</option>
+                                <option value="Shuco Loco">Shuco Loco - Q20.00</option>
+                                <option value="Shuco Chapin">Shuco Chapín - Q22.00</option>
+                                <option value="Combo Shuco + Bebida">Combo Shuco + Bebida - Q25.00</option>
+                                <option value="Bebida">Bebida - Q5.00</option>
+                                <option value="Papas Fritas">Papas Fritas - Q8.00</option>
+                            </select>
+                        </td>
+                        <td><input type="number" id="newQuantity" min="1" value="1"></td>
+                        <td><input type="number" id="newPrice" step="0.25" placeholder="0.00"></td>
+                        <td><span id="newTotal">Q0.00</span></td>
+                        <td>
+                            <select id="newPayment">
+                                <option value="Efectivo">Efectivo</option>
+                                <option value="Tarjeta">Tarjeta</option>
+                                <option value="Transferencia">Transferencia</option>
+                                <option value="Visa">Visa</option>
+                            </select>
+                        </td>
+                        <td><input type="text" id="newNotes" placeholder="Observaciones"></td>
+                        <td><button class="btn" onclick="saveSale()">💾 Guardar</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="totals-section">
+            <div class="totals-grid">
+                <div class="total-card daily-total">
+                    <h3>💰 Total del Día</h3>
+                    <div class="total-amount" id="dailyTotal">Q0.00</div>
+                    <div class="currency">Quetzales Guatemaltecos</div>
+                </div>
+                
+                <div class="total-card payment-methods">
+                    <h3>💳 Desglose por Forma de Pago</h3>
+                    <div id="paymentBreakdown">
+                        <div class="payment-item">
+                            <span>Efectivo:</span>
+                            <span id="efectivo">Q0.00</span>
+                        </div>
+                        <div class="payment-item">
+                            <span>Tarjeta:</span>
+                            <span id="tarjeta">Q0.00</span>
+                        </div>
+                        <div class="payment-item">
+                            <span>Transferencia:</span>
+                            <span id="transferencia">Q0.00</span>
+                        </div>
+                        <div class="payment-item">
+                            <span>Visa:</span>
+                            <span id="visa">Q0.00</span>
+                        </div>
+                    </div>
+                </div>
             </div>
-
-            <div class="imagen">
-                <img src="img/WhatsApp Image 2023-11-17 at 7.12.30 PM.jpeg" alt="">
-            </div>
-
-            <div class="imagen">
-                <img src="img/WhatsApp Image 2023-11-17 at 7.12.31 PM.jpeg" alt="">
-            </div>
-
-            <div class="imagen">
-                <img src="img/WhatsApp Image 2023-11-17 at 7.12.33 PM.jpeg" alt="">
-            </div>
-
-            <div class="imagen">
-                <img src="img/WhatsApp Image 2023-11-17 at 7.12.34 PM (1).jpeg" alt="">
-            </div>
-
-            <div class="imagen">
-                <img src="img/WhatsApp Image 2023-11-17 at 7.12.34 PM (2).jpeg" alt="">
-            </div>
-
-            <div class="imagen">
-                <img src="img/WhatsApp Image 2023-11-17 at 7.12.34 PM (3).jpeg" alt="">
-            </div>
-
-            <div class="imagen">
-                <img src="img/WhatsApp Image 2023-11-17 at 7.12.34 PM (4).jpeg" alt="">
-            </div>
-
-            <div class="imagen">
-                <img src="img/WhatsApp Image 2023-11-17 at 7.12.34 PM (5).jpeg" alt="">
-            </div>
-
-            <div class="imagen">
-                <img src="img/WhatsApp Image 2023-11-17 at 7.12.35 PM (1).jpeg" alt="">
-            </div>
-
-            <div class="imagen">
-                <img src="img/WhatsApp Image 2023-11-17 at 7.12.35 PM (2).jpeg" alt="">
-            </div>
-
-            <div class="imagen">
-                <img src="img/WhatsApp Image 2023-11-17 at 7.12.35 PM (3).jpeg" alt="">
-            </div>
-
-            <div class="imagen">
-                <img src="img/WhatsApp Image 2023-11-17 at 7.12.35 PM.jpeg" alt="">
-            </div>
-
-            <div class="imagen">
-                <img src="img/WhatsApp Image 2023-11-17 at 7.14.33 PM (1).jpeg" alt="">
-            </div>
-
-            <div class="imagen">
-                <img src="img/WhatsApp Image 2023-11-17 at 7.14.33 PM (2).jpeg" alt="">
-            </div>
-
-            <div class="imagen">
-                <img src="img/WhatsApp Image 2023-11-17 at 7.14.33 PM (3).jpeg" alt="">
-            </div>
-
-            <div class="imagen">
-                <img src="img/WhatsApp Image 2023-11-17 at 7.12.33 PM.jpeg" alt="">
-            </div>
-
-            <div class="imagen">
-                <img src="img/WhatsApp Image 2023-11-17 at 7.14.34 PM (1).jpeg" alt="">
-            </div>
-
-            <div class="imagen">
-                <img src="img/WhatsApp Image 2023-11-17 at 7.14.34 PM (2).jpeg" alt="">
-            </div>
-
-            <div class="imagen">
-                <img src="img/WhatsApp Image 2023-11-17 at 7.14.34 PM (3).jpeg" alt="">
-            </div>
-
-            <div class="imagen">
-                <img src="img/WhatsApp Image 2023-11-17 at 7.14.34 PM (4).jpeg" alt="">
-            </div>
-
-            <div class="imagen">
-                <img src="img/WhatsApp Image 2023-11-17 at 7.14.34 PM.jpeg" alt="">
-            </div>
-
-            <div class="imagen">
-                <img src="img/WhatsApp Image 2023-11-17 at 7.16.10 PM (1).jpeg" alt="">
-            </div>
-
-            <div class="imagen">
-                <img src="img/WhatsApp Image 2023-11-17 at 7.16.10 PM (2).jpeg" alt="">
-            </div>
-
-            <div class="imagen">
-                <img src="img/WhatsApp Image 2023-11-17 at 7.16.10 PM (3).jpeg" alt="">
-            </div>
-
         </div>
     </div>
-</body>
 
+    <div id="notification" class="notification"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script>
+        let salesData = JSON.parse(localStorage.getItem('shucosSalesData')) || [];
+        
+        // Establecer fecha actual
+        document.getElementById('sales-date').valueAsDate = new Date();
+        document.getElementById('newTime').value = new Date().toTimeString().slice(0,5);
+        
+        // Auto-completar precio cuando se selecciona producto
+        document.getElementById('newProduct').addEventListener('change', function() {
+            const prices = {
+                'Shuco Sencillo': 10.00,
+                'Shuco Especial': 15.00,
+                'Shuco Mixto': 18.00,
+                'Shuco Loco': 20.00,
+                'Shuco Chapin': 22.00,
+                'Combo Shuco + Bebida': 25.00,
+                'Bebida': 5.00,
+                'Papas Fritas': 8.00
+            };
+            
+            const selectedProduct = this.value;
+            if (prices[selectedProduct]) {
+                document.getElementById('newPrice').value = prices[selectedProduct];
+                updateTotal();
+            }
+        });
+        
+        function updateTotal() {
+            const quantity = parseFloat(document.getElementById('newQuantity').value) || 0;
+            const price = parseFloat(document.getElementById('newPrice').value) || 0;
+            const total = quantity * price;
+            document.getElementById('newTotal').textContent = `Q${total.toFixed(2)}`;
+        }
+        
+        document.getElementById('newQuantity').addEventListener('input', updateTotal);
+        document.getElementById('newPrice').addEventListener('input', updateTotal);
+        
+        function addSale() {
+            document.querySelector('.add-sale').scrollIntoView({ behavior: 'smooth' });
+            document.getElementById('newCustomer').focus();
+        }
+        
+        function saveSale() {
+            const time = document.getElementById('newTime').value;
+            const customer = document.getElementById('newCustomer').value;
+            const product = document.getElementById('newProduct').value;
+            const quantity = parseInt(document.getElementById('newQuantity').value);
+            const price = parseFloat(document.getElementById('newPrice').value);
+            const payment = document.getElementById('newPayment').value;
+            const notes = document.getElementById('newNotes').value;
+            
+            if (!time || !customer || !product || !quantity || !price) {
+                alert('Por favor completa todos los campos obligatorios');
+                return;
+            }
+            
+            const total = quantity * price;
+            const sale = {
+                id: Date.now(),
+                time,
+                customer,
+                product: product.split(' - ')[0], // Quitar el precio del nombre
+                quantity,
+                price,
+                total,
+                payment,
+                notes,
+                date: document.getElementById('sales-date').value
+            };
+            
+            salesData.push(sale);
+            localStorage.setItem('shucosSalesData', JSON.stringify(salesData));
+            renderSales();
+            clearForm();
+            updateTotals();
+            updateStats();
+            showNotification('💾 Venta guardada correctamente');
+        }
+        
+        function renderSales() {
+            const currentDate = document.getElementById('sales-date').value;
+            const todaySales = salesData.filter(sale => sale.date === currentDate);
+            
+            const tbody = document.getElementById('salesBody');
+            const addSaleRow = tbody.querySelector('.add-sale');
+            
+            // Clear existing sales rows
+            const salesRows = tbody.querySelectorAll('tr:not(.add-sale)');
+            salesRows.forEach(row => row.remove());
+            
+            // Add sales data
+            todaySales.forEach(sale => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${sale.time}</td>
+                    <td>${sale.customer}</td>
+                    <td>${sale.product}</td>
+                    <td>${sale.quantity}</td>
+                    <td>Q${sale.price.toFixed(2)}</td>
+                    <td>Q${sale.total.toFixed(2)}</td>
+                    <td>${sale.payment}</td>
+                    <td>${sale.notes}</td>
+                    <td><button class="btn" onclick="deleteSale(${sale.id})" style="background: #dc3545;">🗑️</button></td>
+                `;
+                tbody.insertBefore(row, addSaleRow);
+            });
+        }
+        
+        function deleteSale(id) {
+            if (confirm('¿Estás seguro de eliminar esta venta?')) {
+                salesData = salesData.filter(sale => sale.id !== id);
+                localStorage.setItem('shucosSalesData', JSON.stringify(salesData));
+                renderSales();
+                updateTotals();
+                updateStats();
+                showNotification('🗑️ Venta eliminada');
+            }
+        }
+        
+        function clearForm() {
+            document.getElementById('newTime').value = new Date().toTimeString().slice(0,5);
+            document.getElementById('newCustomer').value = '';
+            document.getElementById('newProduct').value = '';
+            document.getElementById('newQuantity').value = '1';
+            document.getElementById('newPrice').value = '';
+            document.getElementById('newNotes').value = '';
+            document.getElementById('newTotal').textContent = 'Q0.00';
+        }
+        
+        function updateTotals() {
+            const currentDate = document.getElementById('sales-date').value;
+            const todaySales = salesData.filter(sale => sale.date === currentDate);
+            const dailyTotal = todaySales.reduce((sum, sale) => sum + sale.total, 0);
+            
+            document.getElementById('dailyTotal').textContent = `Q${dailyTotal.toFixed(2)}`;
+            
+            // Payment method breakdown
+            const paymentTotals = {
+                'Efectivo': 0,
+                'Tarjeta': 0,
+                'Transferencia': 0,
+                'Visa': 0
+            };
+            
+            todaySales.forEach(sale => {
+                if (paymentTotals.hasOwnProperty(sale.payment)) {
+                    paymentTotals[sale.payment] += sale.total;
+                }
+            });
+            
+            document.getElementById('efectivo').textContent = `Q${paymentTotals['Efectivo'].toFixed(2)}`;
+            document.getElementById('tarjeta').textContent = `Q${paymentTotals['Tarjeta'].toFixed(2)}`;
+            document.getElementById('transferencia').textContent = `Q${paymentTotals['Transferencia'].toFixed(2)}`;
+            document.getElementById('visa').textContent = `Q${paymentTotals['Visa'].toFixed(2)}`;
+        }
+        
+        function updateStats() {
+            const currentDate = document.getElementById('sales-date').value;
+            const todaySales = salesData.filter(sale => sale.date === currentDate);
+            const totalSales = todaySales.length;
+            const totalRevenue = todaySales.reduce((sum, sale) => sum + sale.total, 0);
+            const avgSale = totalSales > 0 ? totalRevenue / totalSales : 0;
+            
+            document.getElementById('totalSales').textContent = totalSales;
+            document.getElementById('totalRevenue').textContent = `Q${totalRevenue.toFixed(2)}`;
+            document.getElementById('avgSale').textContent = `Q${avgSale.toFixed(2)}`;
+        }
+        
+        function exportToExcel() {
+            if (salesData.length === 0) {
+                alert('No hay datos para exportar. Agrega algunas ventas primero.');
+                return;
+            }
+            
+            // Crear workbook
+            const wb = XLSX.utils.book_new();
+            
+            // Agrupar datos por fecha
+            const salesByDate = {};
+            salesData.forEach(sale => {
+                if (!salesByDate[sale.date]) {
+                    salesByDate[sale.date] = [];
+                }
+                salesByDate[sale.date].push(sale);
+            });
+            
+            // Crear hoja para cada fecha
+            Object.keys(salesByDate).forEach(date => {
+                const dateSales = salesByDate[date];
+                const total = dateSales.reduce((sum, sale) => sum + sale.total, 0);
+                
+                // Preparar datos para la hoja
+                const sheetData = [
+                    [`CONTROL DE VENTAS - delicias callejeras`],
+                    [`Fecha: ${date}`],
+                    [],
+                    [`Hora`, `Cliente`, `Producto`, `Cantidad`, `Precio Unit.`, `Total`, `Forma de Pago`, `Notas`],
+                    ...dateSales.map(sale => [
+                        sale.time,
+                        sale.customer,
+                        sale.product,
+                        sale.quantity,
+                        sale.price,
+                        sale.total,
+                        sale.payment,
+                        sale.notes
+                    ]),
+                    [],
+                    [``, ``, ``, ``, `TOTAL DEL DÍA:`, total, ``, ``],
+                    [],
+                    [`DESGLOSE POR FORMA DE PAGO:`],
+                    [`Efectivo:`, dateSales.filter(s => s.payment === 'Efectivo').reduce((sum, s) => sum + s.total, 0)],
+                    [`Tarjeta:`, dateSales.filter(s => s.payment === 'Tarjeta').reduce((sum, s) => sum + s.total, 0)],
+                    [`Transferencia:`, dateSales.filter(s => s.payment === 'Transferencia').reduce((sum, s) => sum + s.total, 0)],
+                    [`Visa:`, dateSales.filter(s => s.payment === 'Visa').reduce((sum, s) => sum + s.total, 0)]
+                ];
+                
+                const ws = XLSX.utils.aoa_to_sheet(sheetData);
+                
+                // Configurar anchos de columna
+                ws['!cols'] = [
+                    {wch: 8}, {wch: 20}, {wch: 20}, {wch: 10},
+                    {wch: 12}, {wch: 12}, {wch: 15}, {wch: 25}
+                ];
+                
+                const sheetName = `Ventas_${date.replace(/-/g, '_')}`;
+                XLSX.utils.book_append_sheet(wb, ws, sheetName);
+            });
+            
+            // Crear hoja resumen
+            const allDates = Object.keys(salesByDate).sort();
+            const summaryData = [
+                [`RESUMEN GENERAL - SHUCOS`],
+                [],
+                [`Fecha`, `Total Ventas`, `Cantidad`, `Promedio`],
+                ...allDates.map(date => {
+                    const dateSales = salesByDate[date];
+                    const total = dateSales.reduce((sum, sale) => sum + sale.total, 0);
+                    const count = dateSales.length;
+                    const avg = count > 0 ? total / count : 0;
+                    return [date, total, count, avg];
+                }),
+                [],
+                [`GRAN TOTAL:`, Object.values(salesByDate).flat().reduce((sum, sale) => sum + sale.total, 0)]
+            ];
+            
+            const wsSummary = XLSX.utils.aoa_to_sheet(summaryData);
+            wsSummary['!cols'] = [{wch: 12}, {wch: 15}, {wch: 12}, {wch: 15}];
+            XLSX.utils.book_append_sheet(wb, wsSummary, 'Resumen');
+            
+            // Descargar archivo
+            const fileName = `Ventas_Shucos_${new Date().toISOString().slice(0,10)}.xlsx`;
+            XLSX.writeFile(wb, fileName);
+            
+            showNotification('📊 Excel generado y descargado exitosamente');
+        }
+        
+        function exportCurrentData() {
+            const currentDate = document.getElementById('sales-date').value;
+            const todaySales = salesData.filter(sale => sale.date === currentDate);
+            
+            if (todaySales.length === 0) {
+                alert('No hay ventas para la fecha seleccionada');
+                return;
+            }
+            
+            const csvContent = [
+                ['Fecha', 'Hora', 'Cliente', 'Producto', 'Cantidad', 'Precio Unitario', 'Total', 'Forma de Pago', 'Notas'],
+                ...todaySales.map(sale => [
+                    sale.date,
+                    sale.time,
+                    sale.customer,
+                    sale.product,
+                    sale.quantity,
+                    sale.price.toFixed(2),
+                    sale.total.toFixed(2),
+                    sale.payment,
+                    sale.notes
+                ])
+            ].map(row => row.join(',')).join('\n');
+            
+            const blob = new Blob([csvContent], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `ventas_shucos_${currentDate}.csv`;
+            a.click();
+            window.URL.revokeObjectURL(url);
+            
+            showNotification('💾 Datos exportados a CSV');
+        }
+        
+        function importData(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const data = new Uint8Array(e.target.result);
+                    const workbook = XLSX.read(data, { type: 'array' });
+                    
+                    // Leer la primera hoja
+                    const firstSheetName = workbook.SheetNames[0];
+                    const worksheet = workbook.Sheets[firstSheetName];
+                    const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+                    
+                    // Buscar fila de encabezados
+                    let headerRowIndex = -1;
+                    for (let i = 0; i < jsonData.length; i++) {
+                        if (jsonData[i].includes('Hora') || jsonData[i].includes('Cliente') || jsonData[i].includes('Producto')) {
+                            headerRowIndex = i;
+                            break;
+                        }
+                    }
+                    
+                    if (headerRowIndex === -1) {
+                        alert('No se encontraron encabezados válidos en el archivo');
+                        return;
+                    }
+                    
+                    const headers = jsonData[headerRowIndex];
+                    const dataRows = jsonData.slice(headerRowIndex + 1);
+                    
+                    // Mapear columnas
+                    const columnMap = {};
+                    headers.forEach((header, index) => {
+                        const headerLower = header.toString().toLowerCase();
+                        if (headerLower.includes('hora')) columnMap.time = index;
+                        if (headerLower.includes('cliente')) columnMap.customer = index;
+                        if (headerLower.includes('producto')) columnMap.product = index;
+                        if (headerLower.includes('cantidad')) columnMap.quantity = index;
+                        if (headerLower.includes('precio')) columnMap.price = index;
+                        if (headerLower.includes('total')) columnMap.total = index;
+                        if (headerLower.includes('pago')) columnMap.payment = index;
+                        if (headerLower.includes('nota')) columnMap.notes = index;
+                        if (headerLower.includes('fecha')) columnMap.date = index;
+                    });
+                    
+                    // Convertir datos
+                    let importedCount = 0;
+                    dataRows.forEach(row => {
+                        if (row.length === 0 || !row[columnMap.customer]) return;
+                        
+                        const sale = {
+                            id: Date.now() + Math.random(),
+                            time: row[columnMap.time] || '',
+                            customer: row[columnMap.customer] || '',
+                            product: row[columnMap.product] || '',
+                            quantity: parseInt(row[columnMap.quantity]) || 1,
+                            price: parseFloat(row[columnMap.price]) || 0,
+                            total: parseFloat(row[columnMap.total]) || (parseInt(row[columnMap.quantity]) || 1) * (parseFloat(row[columnMap.price]) || 0),
+                            payment: row[columnMap.payment] || 'Efectivo',
+                            notes: row[columnMap.notes] || '',
+                            date: row[columnMap.date] || document.getElementById('sales-date').value
+                        };
+                        
+                        if (sale.customer && sale.product) {
+                            salesData.push(sale);
+                            importedCount++;
+                        }
+                    });
+                    
+                    localStorage.setItem('shucosSalesData', JSON.stringify(salesData));
+                    renderSales();
+                    updateTotals();
+                    updateStats();
+                    
+                    showNotification(`📂 ${importedCount} ventas importadas exitosamente`);
+                    
+                } catch (error) {
+                    alert('Error al importar el archivo: ' + error.message);
+                }
+            };
+            
+            reader.readAsArrayBuffer(file);
+            event.target.value = ''; // Reset file input
+        }
+        
+        function showNotification(message) {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+        
+        // Cambiar fecha
+        document.getElementById('sales-date').addEventListener('change', function() {
+            renderSales();
+            updateTotals();
+            updateStats();
+        });
+        
+        // Cargar datos al iniciar
+        renderSales();
+        updateTotals();
+        updateStats();
+        
+        // Guardar automáticamente cada 30 segundos
+        setInterval(() => {
+            if (salesData.length > 0) {
+                localStorage.setItem('shucosSalesData', JSON.stringify(salesData));
+            }
+        }, 30000);
+        
+        // Atajos de teclado
+        document.addEventListener('keydown', function(e) {
+            // Ctrl + S para guardar venta
+            if (e.ctrlKey && e.key === 's') {
+                e.preventDefault();
+                saveSale();
+            }
+            
+            // Ctrl + E para exportar Excel
+            if (e.ctrlKey && e.key === 'e') {
+                e.preventDefault();
+                exportToExcel();
+            }
+            
+            // Ctrl + N para nueva venta
+            if (e.ctrlKey && e.key === 'n') {
+                e.preventDefault();
+                addSale();
+            }
+        });
+    </script>
+</body>
 </html>
