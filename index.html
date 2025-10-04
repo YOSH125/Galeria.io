@@ -13,7 +13,7 @@
         
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #1a1a1a 0%, #000000 100%);
             min-height: 100vh;
             padding: 20px;
         }
@@ -28,8 +28,8 @@
         }
         
         .header {
-            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
-            color: white;
+            background: linear-gradient(135deg, #DC0000, #FF0000);
+            color: #FFD700;
             padding: 30px;
             text-align: center;
         }
@@ -47,8 +47,8 @@
         
         .controls {
             padding: 20px;
-            background: #f8f9fa;
-            border-bottom: 2px solid #e9ecef;
+            background: #1a1a1a;
+            border-bottom: 3px solid #FFD700;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -65,14 +65,16 @@
         
         .date-selector label {
             font-weight: bold;
-            color: #495057;
+            color: #FFD700;
         }
-        
+
         .date-selector input {
             padding: 10px;
-            border: 2px solid #dee2e6;
+            border: 2px solid #FFD700;
             border-radius: 8px;
             font-size: 16px;
+            background: #000;
+            color: #FFD700;
         }
         
         .export-controls {
@@ -82,9 +84,9 @@
         }
         
         .btn {
-            background: linear-gradient(135deg, #28a745, #20c997);
-            color: white;
-            border: none;
+            background: linear-gradient(135deg, #DC0000, #FF0000);
+            color: #FFD700;
+            border: 2px solid #FFD700;
             padding: 12px 20px;
             border-radius: 8px;
             cursor: pointer;
@@ -95,49 +97,62 @@
             align-items: center;
             gap: 8px;
         }
-        
+
         .btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(40, 167, 69, 0.4);
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.6);
+            background: linear-gradient(135deg, #FF0000, #DC0000);
         }
-        
+
         .btn.excel {
-            background: linear-gradient(135deg, #28a745, #20c997);
+            background: linear-gradient(135deg, #FFD700, #FFC107);
+            color: #000;
+            border-color: #DC0000;
         }
-        
+
         .btn.export {
-            background: linear-gradient(135deg, #6f42c1, #e83e8c);
+            background: #000;
+            color: #FFD700;
+            border-color: #FFD700;
         }
-        
+
         .btn.import {
-            background: linear-gradient(135deg, #17a2b8, #007bff);
+            background: linear-gradient(135deg, #DC0000, #FF0000);
+            color: #FFD700;
+            border-color: #FFD700;
         }
         
         .stats-bar {
-            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            background: #000;
             padding: 15px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid #dee2e6;
+            border-bottom: 3px solid #FFD700;
             flex-wrap: wrap;
             gap: 15px;
         }
-        
+
         .stat-item {
             text-align: center;
+            background: #1a1a1a;
+            padding: 15px 25px;
+            border-radius: 10px;
+            border: 2px solid #DC0000;
+            flex: 1;
+            min-width: 150px;
         }
-        
+
         .stat-number {
             font-size: 1.5em;
             font-weight: bold;
-            color: #28a745;
+            color: #FFD700;
         }
-        
+
         .stat-label {
             font-size: 0.9em;
-            color: #6c757d;
-            margin-top: 2px;
+            color: #FFD700;
+            margin-top: 5px;
         }
         
         .sales-section {
@@ -146,9 +161,9 @@
         
         .section-title {
             font-size: 1.5em;
-            color: #495057;
+            color: #FFD700;
             margin-bottom: 20px;
-            border-bottom: 3px solid #ff6b6b;
+            border-bottom: 3px solid #DC0000;
             padding-bottom: 10px;
         }
         
@@ -163,35 +178,38 @@
         }
         
         .sales-table th {
-            background: linear-gradient(135deg, #495057, #6c757d);
-            color: white;
+            background: linear-gradient(135deg, #DC0000, #FF0000);
+            color: #FFD700;
             padding: 15px 10px;
             text-align: center;
             font-weight: bold;
             font-size: 14px;
+            position: sticky;
+            top: 0;
+            z-index: 10;
         }
-        
+
         .sales-table td {
             padding: 12px 10px;
             text-align: center;
-            border-bottom: 1px solid #e9ecef;
+            border-bottom: 1px solid #FFD700;
             font-size: 14px;
         }
-        
+
         .sales-table tr:nth-child(even) {
             background-color: #f8f9fa;
         }
-        
+
         .sales-table tr:hover {
-            background-color: #e3f2fd;
+            background-color: #fff9e6;
             transition: background-color 0.3s ease;
         }
         
         .add-sale {
-            background: #e3f2fd;
-            border: 2px dashed #2196f3;
+            background: #fff9e6;
+            border: 2px dashed #FFD700;
         }
-        
+
         .add-sale input, .add-sale select {
             width: 100%;
             border: none;
@@ -200,51 +218,52 @@
             text-align: center;
             font-size: 14px;
         }
-        
+
         .add-sale input:focus, .add-sale select:focus {
-            outline: 2px solid #2196f3;
+            outline: 2px solid #DC0000;
             border-radius: 4px;
         }
         
         .totals-section {
-            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            background: #1a1a1a;
             padding: 30px;
-            border-top: 3px solid #ff6b6b;
+            border-top: 3px solid #FFD700;
         }
-        
+
         .totals-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 30px;
         }
-        
+
         .total-card {
-            background: white;
+            background: #000;
             padding: 25px;
             border-radius: 15px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            border-left: 5px solid;
+            box-shadow: 0 10px 25px rgba(255, 215, 0, 0.2);
+            border: 3px solid;
         }
-        
+
         .daily-total {
-            border-left-color: #28a745;
+            border-color: #DC0000;
         }
-        
+
         .payment-methods {
-            border-left-color: #17a2b8;
+            border-color: #FFD700;
         }
-        
+
         .total-card h3 {
-            color: #495057;
+            color: #FFD700;
             margin-bottom: 15px;
             font-size: 1.3em;
         }
-        
+
         .total-amount {
             font-size: 2em;
             font-weight: bold;
-            color: #28a745;
+            color: #FFD700;
             margin-bottom: 10px;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
         }
         
         .payment-item {
@@ -252,32 +271,39 @@
             justify-content: space-between;
             margin-bottom: 10px;
             padding: 8px 0;
-            border-bottom: 1px solid #e9ecef;
+            border-bottom: 1px solid #333;
         }
-        
+
+        .payment-item span {
+            color: #FFD700;
+        }
+
         .currency {
-            color: #6c757d;
+            color: #FFD700;
             font-size: 0.9em;
+            opacity: 0.8;
         }
         
         .export-panel {
-            background: #fff3cd;
-            border: 2px solid #ffc107;
+            background: linear-gradient(135deg, #1a1a1a, #000);
+            border: 3px solid #FFD700;
             border-radius: 15px;
             padding: 25px;
             margin: 20px 0;
             text-align: center;
         }
-        
+
         .export-panel h3 {
-            color: #856404;
+            color: #FFD700;
             margin-bottom: 15px;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
         }
-        
+
         .export-panel p {
-            color: #856404;
+            color: #FFD700;
             margin-bottom: 20px;
             line-height: 1.5;
+            opacity: 0.9;
         }
         
         .hidden {
@@ -288,16 +314,18 @@
             position: fixed;
             top: 20px;
             right: 20px;
-            background: #28a745;
-            color: white;
+            background: linear-gradient(135deg, #DC0000, #FF0000);
+            color: #FFD700;
             padding: 15px 25px;
             border-radius: 10px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            border: 2px solid #FFD700;
+            box-shadow: 0 10px 25px rgba(255, 215, 0, 0.3);
             z-index: 1000;
             transform: translateX(400px);
             transition: transform 0.3s ease;
+            font-weight: bold;
         }
-        
+
         .notification.show {
             transform: translateX(0);
         }
@@ -311,10 +339,11 @@
         }
         
         .file-input label {
-            background: linear-gradient(135deg, #17a2b8, #007bff);
-            color: white;
+            background: linear-gradient(135deg, #DC0000, #FF0000);
+            color: #FFD700;
             padding: 12px 20px;
             border-radius: 8px;
+            border: 2px solid #FFD700;
             cursor: pointer;
             font-weight: bold;
             transition: all 0.3s ease;
@@ -322,45 +351,250 @@
             align-items: center;
             gap: 8px;
         }
-        
+
         .file-input label:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(23, 162, 184, 0.4);
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.6);
         }
         
-        @media (max-width: 768px) {
+        /* Wrapper para hacer la tabla scrollable */
+        .table-wrapper {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            margin: 0 -15px;
+            padding: 0 15px;
+        }
+
+        /* Tablets grandes y escritorios pequeños */
+        @media (max-width: 1200px) {
             .container {
-                margin: 10px;
-                border-radius: 10px;
+                max-width: 95%;
             }
-            
-            .header {
-                padding: 20px;
+
+            .totals-grid {
+                grid-template-columns: 1fr;
             }
-            
+
+            .stat-item {
+                min-width: 120px;
+            }
+        }
+
+        /* Tablets */
+        @media (max-width: 992px) {
             .header h1 {
                 font-size: 2em;
             }
-            
+
+            .header p {
+                font-size: 1em;
+            }
+
             .controls {
                 flex-direction: column;
                 align-items: stretch;
             }
-            
-            .export-controls {
+
+            .date-selector {
                 justify-content: center;
             }
-            
+
+            .export-controls {
+                justify-content: center;
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .file-input label {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        /* Móviles grandes */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            .container {
+                border-radius: 10px;
+            }
+
+            .header {
+                padding: 20px 15px;
+            }
+
+            .header h1 {
+                font-size: 1.5em;
+            }
+
+            .header p {
+                font-size: 0.9em;
+            }
+
+            .stats-bar {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .stat-item {
+                width: 100%;
+                min-width: auto;
+            }
+
+            .stat-number {
+                font-size: 1.8em;
+            }
+
+            .sales-section {
+                padding: 15px;
+            }
+
             .sales-table {
                 font-size: 12px;
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
             }
-            
+
+            .sales-table thead,
+            .sales-table tbody,
+            .sales-table tr,
+            .sales-table th,
+            .sales-table td {
+                display: table-cell;
+            }
+
             .sales-table th, .sales-table td {
                 padding: 8px 5px;
+                min-width: 80px;
             }
-            
+
+            .totals-section {
+                padding: 15px;
+            }
+
             .totals-grid {
                 grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .total-card {
+                padding: 20px;
+            }
+
+            .total-amount {
+                font-size: 1.8em;
+            }
+
+            .export-panel {
+                padding: 20px 15px;
+                margin: 15px 0;
+            }
+
+            .export-panel h3 {
+                font-size: 1.1em;
+            }
+
+            .export-panel p {
+                font-size: 0.9em;
+            }
+        }
+
+        /* Móviles pequeños */
+        @media (max-width: 480px) {
+            body {
+                padding: 5px;
+            }
+
+            .header {
+                padding: 15px 10px;
+            }
+
+            .header h1 {
+                font-size: 1.3em;
+            }
+
+            .header p {
+                font-size: 0.8em;
+            }
+
+            .controls {
+                padding: 15px 10px;
+            }
+
+            .date-selector {
+                flex-direction: column;
+                gap: 10px;
+                width: 100%;
+            }
+
+            .date-selector input {
+                width: 100%;
+            }
+
+            .stats-bar {
+                padding: 10px;
+            }
+
+            .stat-number {
+                font-size: 1.5em;
+            }
+
+            .stat-label {
+                font-size: 0.8em;
+            }
+
+            .section-title {
+                font-size: 1.2em;
+            }
+
+            .sales-table {
+                font-size: 11px;
+            }
+
+            .sales-table th, .sales-table td {
+                padding: 6px 3px;
+                min-width: 70px;
+            }
+
+            .btn {
+                padding: 10px 15px;
+                font-size: 13px;
+            }
+
+            .total-card h3 {
+                font-size: 1.1em;
+            }
+
+            .total-amount {
+                font-size: 1.5em;
+            }
+
+            .payment-item {
+                font-size: 0.9em;
+            }
+        }
+
+        /* Móviles muy pequeños */
+        @media (max-width: 360px) {
+            .header h1 {
+                font-size: 1.1em;
+            }
+
+            .sales-table th, .sales-table td {
+                min-width: 60px;
+                font-size: 10px;
+            }
+
+            .btn {
+                padding: 8px 12px;
+                font-size: 12px;
             }
         }
     </style>
@@ -424,6 +658,7 @@
                         <th>Forma de Pago</th>
                         <th>Notas</th>
                         <th>Acciones</th>
+                        <th>dirección</th>
                     </tr>
                 </thead>
                 <tbody id="salesBody">
@@ -433,14 +668,12 @@
                         <td>
                             <select id="newProduct">
                                 <option value="">Seleccionar...</option>
-                                <option value="Shuco Sencillo">Shuco Sencillo - Q10.00</option>
-                                <option value="Shuco Especial">Shuco Especial - Q15.00</option>
-                                <option value="Shuco Mixto">Shuco Mixto - Q18.00</option>
-                                <option value="Shuco Loco">Shuco Loco - Q20.00</option>
-                                <option value="Shuco Chapin">Shuco Chapín - Q22.00</option>
-                                <option value="Combo Shuco + Bebida">Combo Shuco + Bebida - Q25.00</option>
-                                <option value="Bebida">Bebida - Q5.00</option>
-                                <option value="Papas Fritas">Papas Fritas - Q8.00</option>
+                                <option value="Shuco Mixto">Shuco Mixto - Q15.00</option>
+                                <option value="Shuco Carne">Shuco Carne - Q13.00</option>
+                                <option value="Shuco Salchicha">Shuco Salchicha - Q10.00</option>
+                                <option value="Shuco Longaniza">Shuco Longaniza - Q12.00</option>
+                                <option value="Shuco Chorizo">Shuco Chorizo - Q12.00</option>
+                                <option value="Gaseosa">Gaseosa - Q5.00</option>
                             </select>
                         </td>
                         <td><input type="number" id="newQuantity" min="1" value="1"></td>
@@ -507,16 +740,14 @@
         // Auto-completar precio cuando se selecciona producto
         document.getElementById('newProduct').addEventListener('change', function() {
             const prices = {
-                'Shuco Sencillo': 10.00,
-                'Shuco Especial': 15.00,
-                'Shuco Mixto': 18.00,
-                'Shuco Loco': 20.00,
-                'Shuco Chapin': 22.00,
-                'Combo Shuco + Bebida': 25.00,
-                'Bebida': 5.00,
-                'Papas Fritas': 8.00
+                'Shuco Mixto': 15.00,
+                'Shuco Carne': 13.00,
+                'Shuco Salchicha': 10.00,
+                'Shuco Longaniza': 12.00,
+                'Shuco Chorizo': 12.00,
+                'Gaseosa': 5.00
             };
-            
+
             const selectedProduct = this.value;
             if (prices[selectedProduct]) {
                 document.getElementById('newPrice').value = prices[selectedProduct];
@@ -599,7 +830,7 @@
                     <td>Q${sale.total.toFixed(2)}</td>
                     <td>${sale.payment}</td>
                     <td>${sale.notes}</td>
-                    <td><button class="btn" onclick="deleteSale(${sale.id})" style="background: #dc3545;">🗑️</button></td>
+                    <td><button class="btn" onclick="deleteSale(${sale.id})" style="background: #000; border-color: #DC0000; color: #DC0000;">🗑️</button></td>
                 `;
                 tbody.insertBefore(row, addSaleRow);
             });
