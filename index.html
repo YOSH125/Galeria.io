@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ventas de Shucos</title>
+    <title>Reporte de Ventas - Shucos</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <style>
         * {
@@ -13,262 +13,274 @@
         }
         
         body {
-            font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             padding: 40px 20px;
         }
         
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             background: white;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 50px;
         }
         
         .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            text-align: center;
             margin-bottom: 40px;
-            flex-wrap: wrap;
-            gap: 20px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 30px;
         }
         
         h1 {
-            font-size: 2.5em;
-            color: #333;
-        }
-        
-        .btn-descargar {
-            background: #43a047;
-            color: white;
-            border: none;
-            padding: 15px 30px;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: background 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .btn-descargar:hover {
-            background: #388e3c;
-        }
-        
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 40px;
-        }
-        
-        thead {
-            background: #43a047;
-            color: white;
-        }
-        
-        th, td {
-            padding: 15px 20px;
-            text-align: left;
-            border: 1px solid #ddd;
-        }
-        
-        th {
-            font-weight: bold;
-        }
-        
-        td:nth-child(2),
-        td:nth-child(3),
-        td:nth-child(4),
-        th:nth-child(2),
-        th:nth-child(3),
-        th:nth-child(4) {
-            text-align: right;
-        }
-        
-        tbody tr:nth-child(odd) {
-            background: #f5f5f5;
-        }
-        
-        tbody tr:hover {
-            background: #e8f5e9;
-        }
-        
-        .totales {
-            background: #c8e6c9 !important;
-            font-weight: bold;
-        }
-        
-        .totales td {
-            color: #2e7d32;
-            font-weight: bold;
-        }
-        
-        .estadisticas {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-        }
-        
-        .stat-card {
-            padding: 25px;
-            border-radius: 10px;
-            border-left: 5px solid;
-        }
-        
-        .stat-card.blue {
-            background: #e3f2fd;
-            border-color: #2196f3;
-        }
-        
-        .stat-card.green {
-            background: #e8f5e9;
-            border-color: #4caf50;
-        }
-        
-        .stat-card.purple {
-            background: #f3e5f5;
-            border-color: #9c27b0;
-        }
-        
-        .stat-label {
-            color: #666;
-            font-size: 14px;
+            font-size: 3em;
+            color: #2c3e50;
             margin-bottom: 10px;
         }
         
-        .stat-value {
-            font-size: 2em;
+        .subtitle {
+            color: #7f8c8d;
+            font-size: 1.2em;
+            margin-bottom: 30px;
+        }
+        
+        .btn-descargar {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 18px 40px;
+            border-radius: 50px;
+            font-size: 18px;
             font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
         }
         
-        .stat-card.blue .stat-value {
-            color: #2196f3;
+        .btn-descargar:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(102, 126, 234, 0.6);
         }
         
-        .stat-card.green .stat-value {
-            color: #4caf50;
+        .preview {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 15px;
+            margin-top: 30px;
         }
         
-        .stat-card.purple .stat-value {
-            color: #9c27b0;
+        .preview h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+        
+        .info-box {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 5px solid #667eea;
+            margin-bottom: 20px;
+        }
+        
+        .info-box h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        
+        .info-box ul {
+            list-style: none;
+            padding-left: 20px;
+        }
+        
+        .info-box li {
+            margin: 8px 0;
+            color: #555;
+        }
+        
+        .info-box li:before {
+            content: "✓ ";
+            color: #43a047;
+            font-weight: bold;
+            margin-right: 8px;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>📊 Ventas de Shucos</h1>
+            <h1>📊 REPORTE DE VENTAS</h1>
+            <p class="subtitle">Presentación Ejecutiva - Junta Directiva</p>
             <button class="btn-descargar" onclick="descargarExcel()">
-                <span>⬇</span> Descargar Excel (XLSX)
+                ⬇ DESCARGAR REPORTE COMPLETO (XLSX)
             </button>
         </div>
         
-        <table>
-            <thead>
-                <tr>
-                    <th>Día</th>
-                    <th>Cantidad de Shucos (Panes)</th>
-                    <th>Ventas (Q)</th>
-                    <th>Precio Promedio</th>
-                </tr>
-            </thead>
-            <tbody id="tabla-datos">
-                <tr>
-                    <td>Día 1</td>
-                    <td>35</td>
-                    <td>Q560.00</td>
-                    <td>Q16.00</td>
-                </tr>
-                <tr>
-                    <td>Día 2</td>
-                    <td>50</td>
-                    <td>Q730.00</td>
-                    <td>Q14.60</td>
-                </tr>
-                <tr>
-                    <td>Día 3</td>
-                    <td>50</td>
-                    <td>Q625.00</td>
-                    <td>Q12.50</td>
-                </tr>
-                <tr class="totales">
-                    <td>TOTALES</td>
-                    <td>135</td>
-                    <td>Q1915.00</td>
-                    <td>Q14.19</td>
-                </tr>
-            </tbody>
-        </table>
-        
-        <div class="estadisticas">
-            <div class="stat-card blue">
-                <div class="stat-label">Total Shucos Vendidos</div>
-                <div class="stat-value">135</div>
+        <div class="preview">
+            <h2>📋 Contenido del Reporte Excel</h2>
+            
+            <div class="info-box">
+                <h3>Hoja 1: Dashboard Ejecutivo</h3>
+                <ul>
+                    <li>Resumen de KPIs principales</li>
+                    <li>Total de ventas en Quetzales</li>
+                    <li>Total de unidades vendidas</li>
+                    <li>Ticket promedio por shuco</li>
+                    <li>Tendencias y variaciones</li>
+                </ul>
             </div>
-            <div class="stat-card green">
-                <div class="stat-label">Ventas Totales</div>
-                <div class="stat-value">Q1915.00</div>
+            
+            <div class="info-box">
+                <h3>Hoja 2: Detalle de Ventas Diarias</h3>
+                <ul>
+                    <li>Ventas por día con cantidades exactas</li>
+                    <li>Precio unitario por día</li>
+                    <li>Porcentaje de contribución</li>
+                    <li>Variación día a día</li>
+                </ul>
             </div>
-            <div class="stat-card purple">
-                <div class="stat-label">Precio Promedio</div>
-                <div class="stat-value">Q14.19</div>
+            
+            <div class="info-box">
+                <h3>Hoja 3: Análisis Financiero</h3>
+                <ul>
+                    <li>Ingresos totales y proyecciones</li>
+                    <li>Análisis de rentabilidad</li>
+                    <li>Proyección semanal y mensual</li>
+                    <li>Índices de crecimiento</li>
+                </ul>
+            </div>
+            
+            <div class="info-box">
+                <h3>Hoja 4: Gráficos y Visualizaciones</h3>
+                <ul>
+                    <li>Datos preparados para gráficos</li>
+                    <li>Comparativa de ventas diarias</li>
+                    <li>Distribución de ingresos</li>
+                </ul>
             </div>
         </div>
     </div>
     
     <script>
-        // Datos para exportar
-        const datos = [
-            { dia: 1, cantidad: 35, ventas: 560 },
-            { dia: 2, cantidad: 50, ventas: 730 },
-            { dia: 3, cantidad: 50, ventas: 625 }
-        ];
-        
         function descargarExcel() {
-            // Preparar datos para Excel
-            const datosExcel = datos.map(row => ({
-                'Día': `Día ${row.dia}`,
-                'Cantidad de Shucos (Panes)': row.cantidad,
-                'Ventas (Q)': row.ventas,
-                'Precio Promedio': parseFloat((row.ventas / row.cantidad).toFixed(2))
-            }));
-            
-            // Calcular totales
-            const totalShucos = datos.reduce((sum, row) => sum + row.cantidad, 0);
-            const totalVentas = datos.reduce((sum, row) => sum + row.ventas, 0);
-            const precioPromedio = totalVentas / totalShucos;
-            
-            // Agregar fila de totales
-            datosExcel.push({
-                'Día': 'TOTALES',
-                'Cantidad de Shucos (Panes)': totalShucos,
-                'Ventas (Q)': totalVentas,
-                'Precio Promedio': parseFloat(precioPromedio.toFixed(2))
-            });
-            
-            // Crear libro de trabajo
             const wb = XLSX.utils.book_new();
-            const ws = XLSX.utils.json_to_sheet(datosExcel);
             
-            // Ajustar ancho de columnas
-            ws['!cols'] = [
-                { wch: 15 },
-                { wch: 28 },
-                { wch: 15 },
-                { wch: 18 }
+            // HOJA 1: DASHBOARD EJECUTIVO
+            const dashboard = [
+                ['REPORTE DE VENTAS - SHUCOS'],
+                ['Presentación Ejecutiva para Junta Directiva'],
+                ['Fecha de Reporte: ' + new Date().toLocaleDateString('es-GT')],
+                [''],
+                ['INDICADORES CLAVE DE RENDIMIENTO (KPIs)'],
+                [''],
+                ['Métrica', 'Valor', 'Unidad'],
+                ['Total de Ventas', 1915, 'Quetzales'],
+                ['Total de Shucos Vendidos', 135, 'Unidades'],
+                ['Ticket Promedio', 14.19, 'Q/Unidad'],
+                ['Venta Promedio Diaria', 638.33, 'Quetzales'],
+                ['Unidades Promedio Diarias', 45, 'Shucos'],
+                [''],
+                ['RESUMEN EJECUTIVO'],
+                [''],
+                ['Período Analizado:', '3 días'],
+                ['Mejor Día de Ventas:', 'Día 2 (Q730.00)'],
+                ['Precio Más Alto:', 'Día 1 (Q16.00)'],
+                ['Volumen Máximo:', 'Día 2 y 3 (50 unidades)'],
             ];
             
-            // Agregar hoja al libro
-            XLSX.utils.book_append_sheet(wb, ws, 'Ventas Shucos');
+            const ws1 = XLSX.utils.aoa_to_sheet(dashboard);
+            ws1['!cols'] = [{ wch: 30 }, { wch: 15 }, { wch: 15 }];
+            XLSX.utils.book_append_sheet(wb, ws1, 'Dashboard Ejecutivo');
+            
+            // HOJA 2: DETALLE DE VENTAS DIARIAS
+            const ventasDiarias = [
+                ['DETALLE DE VENTAS POR DÍA'],
+                [''],
+                ['Día', 'Cantidad (Unidades)', 'Ventas (Q)', 'Precio Unitario (Q)', '% Contribución', 'Variación vs Día Anterior'],
+                ['Día 1', 35, 560.00, 16.00, '29.24%', '-'],
+                ['Día 2', 50, 730.00, 14.60, '38.12%', '+30.36%'],
+                ['Día 3', 50, 625.00, 12.50, '32.64%', '-14.38%'],
+                [''],
+                ['TOTALES', 135, 1915.00, 14.19, '100.00%', ''],
+                [''],
+                ['ANÁLISIS'],
+                ['Mejor Día:', 'Día 2', '', 'Q730.00'],
+                ['Día Más Eficiente:', 'Día 1', '', 'Q16.00/unidad'],
+                ['Crecimiento Total:', '', '', '11.61%'],
+            ];
+            
+            const ws2 = XLSX.utils.aoa_to_sheet(ventasDiarias);
+            ws2['!cols'] = [{ wch: 15 }, { wch: 22 }, { wch: 15 }, { wch: 20 }, { wch: 18 }, { wch: 25 }];
+            XLSX.utils.book_append_sheet(wb, ws2, 'Ventas Diarias');
+            
+            // HOJA 3: ANÁLISIS FINANCIERO
+            const analisisFinanciero = [
+                ['ANÁLISIS FINANCIERO DETALLADO'],
+                [''],
+                ['INGRESOS Y PROYECCIONES'],
+                [''],
+                ['Concepto', 'Valor Actual', 'Proyección Semanal', 'Proyección Mensual'],
+                ['Ingresos Totales (3 días)', 1915.00, 4468.33, 19150.00],
+                ['Unidades Vendidas', 135, 315, 1350],
+                ['Ticket Promedio', 14.19, 14.19, 14.19],
+                [''],
+                ['ANÁLISIS DE RENDIMIENTO'],
+                [''],
+                ['Indicador', 'Día 1', 'Día 2', 'Día 3', 'Promedio'],
+                ['Ventas (Q)', 560.00, 730.00, 625.00, 638.33],
+                ['Unidades', 35, 50, 50, 45],
+                ['Precio/Unidad', 16.00, 14.60, 12.50, 14.19],
+                [''],
+                ['ÍNDICES DE CRECIMIENTO'],
+                [''],
+                ['Crecimiento Día 1 a Día 2:', '+30.36%'],
+                ['Crecimiento Día 2 a Día 3:', '-14.38%'],
+                ['Crecimiento Neto:', '+11.61%'],
+                [''],
+                ['PROYECCIONES'],
+                [''],
+                ['Si mantenemos el promedio actual:'],
+                ['Ventas Semanales:', 4468.33, 'Quetzales'],
+                ['Ventas Mensuales (30 días):', 19150.00, 'Quetzales'],
+                ['Ventas Anuales (365 días):', 233004.17, 'Quetzales'],
+            ];
+            
+            const ws3 = XLSX.utils.aoa_to_sheet(analisisFinanciero);
+            ws3['!cols'] = [{ wch: 30 }, { wch: 18 }, { wch: 22 }, { wch: 22 }];
+            XLSX.utils.book_append_sheet(wb, ws3, 'Análisis Financiero');
+            
+            // HOJA 4: DATOS PARA GRÁFICOS
+            const datosGraficos = [
+                ['DATOS PARA VISUALIZACIÓN'],
+                [''],
+                ['Ventas Diarias - Comparativa'],
+                ['Día', 'Ventas (Q)', 'Unidades', 'Precio Unitario'],
+                ['Día 1', 560, 35, 16.00],
+                ['Día 2', 730, 50, 14.60],
+                ['Día 3', 625, 50, 12.50],
+                [''],
+                ['Distribución de Ventas'],
+                ['Día', 'Porcentaje'],
+                ['Día 1', 29.24],
+                ['Día 2', 38.12],
+                ['Día 3', 32.64],
+                [''],
+                ['Evolución de Precios'],
+                ['Día', 'Precio'],
+                ['Día 1', 16.00],
+                ['Día 2', 14.60],
+                ['Día 3', 12.50],
+            ];
+            
+            const ws4 = XLSX.utils.aoa_to_sheet(datosGraficos);
+            ws4['!cols'] = [{ wch: 30 }, { wch: 15 }, { wch: 15 }, { wch: 18 }];
+            XLSX.utils.book_append_sheet(wb, ws4, 'Datos Gráficos');
             
             // Descargar archivo
-            XLSX.writeFile(wb, 'ventas_shucos.xlsx');
+            XLSX.writeFile(wb, 'Reporte_Ventas_Shucos_Junta_Directiva.xlsx');
         }
     </script>
 </body>
